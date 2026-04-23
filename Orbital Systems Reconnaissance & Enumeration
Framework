@@ -1,5 +1,6 @@
 Framework Module: Space/RF Segment Assessments
 Author: Michael Watson
+Role: Cyber-Investigation & IT Analyst | Certified Paralegal
 
 1. Executive Summary
 This document outlines the standard operating procedure (SOP) for conducting Reconnaissance, Scanning, and Enumeration against satellite infrastructure. Unlike terrestrial TCP/IP networks, orbital engagements require a bifurcated approach targeting both the Space Segment (the physical satellite and RF links) and the Ground Segment (terrestrial control servers and user terminals).
