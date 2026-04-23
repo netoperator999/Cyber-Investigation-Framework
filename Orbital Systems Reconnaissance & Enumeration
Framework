@@ -1,0 +1,47 @@
+Framework Module: Space/RF Segment Assessments
+Author: Michael Watson
+
+1. Executive Summary
+This document outlines the standard operating procedure (SOP) for conducting Reconnaissance, Scanning, and Enumeration against satellite infrastructure. Unlike terrestrial TCP/IP networks, orbital engagements require a bifurcated approach targeting both the Space Segment (the physical satellite and RF links) and the Ground Segment (terrestrial control servers and user terminals).
+
+2. Phase 1: Reconnaissance (Intelligence Gathering)
+The objective of this phase is passive data collection. Before any RF equipment is powered on, we must map the target's orbital mechanics, frequency allocations, and ground infrastructure.
+
+2.1. Orbital Mechanics & Targeting
+To intercept signals, we must know exactly when and where the satellite will be in the sky relative to our collection ground station.
+
+TLE (Two-Line Element) Tracking: Utilize sources like Space-Track.org or Celestrak to pull the target's TLE data.
+Propagation Modeling: Input TLE data into tracking software (e.g., Gpredict, Orbitron) to calculate exact pass times, elevation, and azimuth for our antenna arrays.
+2.2. Frequency & Protocol OSINT
+Satellites operate on highly regulated frequencies. We rely on open-source intelligence to find our "entry points."
+
+Regulatory Databases: Query ITU (International Telecommunication Union) and FCC OET databases for the target's frequency filings, bandwidth, and emission designators.
+Academic & Hobbyist Networks: Leverage platforms like SatNOGS (Satellite Networked Open Ground Station) to identify known downlink frequencies, baud rates, and modulation schemes (e.g., BPSK, QPSK).
+Documentation Leaks: Search for vendor manuals or academic papers detailing the target's framing protocol (most commonly CCSDS - Consultative Committee for Space Data Systems).
+2.3. Ground Segment Mapping
+The easiest way to compromise a satellite is often through its terrestrial controllers.
+
+ASN Mapping: Identify ASNs belonging to the satellite operator or their contracted ground station providers (e.g., KSAT, AWS Ground Station).
+Passive IP Discovery: Use Shodan, Censys, and DNS mapping to find exposed telemetry dashboards, C2 (Command & Control) servers, or VPN endpoints related to the operator.
+3. Phase 2: Scanning & Enumeration
+This phase bridges the gap between passive listening and active mapping of the target's internal structures.
+
+3.1. RF Spectrum Scanning (The "Space Nmap")
+Instead of sweeping IP addresses, we sweep radio frequencies to identify active data channels during a satellite pass.
+
+Hardware: SDRs (Software Defined Radios) capable of wideband reception (e.g., HackRF One, USRP) paired with automated tracking antennas (Yagi or Parabolic).
+Waterfall Analysis: Use SDR# or GNU Radio to record the baseband RF data (IQ files) during a pass. We scan the waterfall for Doppler-shifted signals indicative of orbital telemetry.
+Demodulation: Pipe the raw RF data through decoders (like GNU Radio flowgraphs or Universal Radio Hacker) to convert analog radio waves into a binary stream.
+3.2. Space "Port" Enumeration (CCSDS APID Mapping)
+Satellites do not use TCP/UDP ports. Instead, if the satellite uses CCSDS protocols, data is routed using APIDs (Application Process Identifiers).
+
+APID Discovery: Write custom Python scripts to parse the decoded binary frames and extract header data.
+Endpoint Mapping: By observing which APIDs are active, we can enumerate the satellite's internal subsystems (e.g., APID 10 might be battery telemetry, APID 50 might be the payload sensor, APID 0 is often the command interface). This is the exact equivalent of finding open ports on a server.
+3.3. Ground Segment Active Scanning
+While the RF team handles the Space Segment, the network team engages the Ground Segment using traditional methodologies.
+
+Targeted Scanning: Execute nmap and masscan against identified terrestrial ground station IP ranges.
+Service Enumeration: Look for specialized control software ports, exposed database ports (often used for telemetry archiving), and insecure management web interfaces.
+4. Operational Guardrails & Rules of Engagement
+Receive-Only Constraint: During initial scanning, all SDRs MUST be configured for receive-only (RX). Transmitting (TX) without licensing on satellite frequencies is a violation of federal and international law.
+IoT/Microcontroller Limits: Micro-tools like the Flipper Zero are out of scope for direct RF scanning due to frequency mismatch (Sub-GHz vs. GHz) and insufficient DSP (Digital Signal Processing) power. Stick to dedicated SDRs.
