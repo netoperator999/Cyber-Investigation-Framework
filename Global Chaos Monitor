@@ -1,0 +1,29 @@
+Digital Forensic & OSINT Triage Framework Standard Operating Procedure (SOP) for Missing Persons Intelligence Author: Michael Watson Role: Cyber-Investigation & IT Analyst | Certified Paralegal
+
+God’s Eye is a high-fidelity Global Chaos Monitor designed to aggregate real-time geopolitical, cybersecurity, and financial intelligence into a single tactical command hub. This system bypasses standard information silos to provide a "bird's-eye view" of global volatility.
+
+I. Core Systems & Capabilities
+The dashboard is divided into several specialized modules designed for rapid situational awareness:
+
+Global Intel Feed (The Shadow Server): A Python-based backend that intercepts and parses live feeds from elite security and OSINT sources including The Hacker News, CISA Cyber Advisories, and Bellingcat. It utilizes a ThreadPoolExecutor to fetch data from six global sources simultaneously, ensuring sub-second refresh rates.
+
+Tactical War Room: A multi-domain mapping interface allowing the operator to toggle between:
+
+GROUND: Live conflict updates via LiveUA.
+
+AIR: Real-time flight tracking via ADS-B Exchange.
+
+SEA: Global maritime traffic via MarineTraffic.
+
+Chronosphere: A synchronized global clock engine tracking UTC system time, local time, and dynamic zones for strategic hubs like Moscow, Tehran, and Beijing.
+
+Doomsday Clock: A persistent visual monitor currently locked at 90 seconds to midnight.
+
+Financial Pulse: A real-time market ticker tracking Tension Indicators such as Crude Oil, Gold (Safe Haven), the VIX (Fear Index), and Bitcoin.
+
+II. Technical Architecture
+Frontend: A Netrunner inspired terminal UI built with HTML5, CSS3 (Grid/Flexbox), and Vanilla JavaScript.
+
+Backend: A Flask-powered Shadow Server that utilizes Browser Spoofing Profiles to bypass CORS restrictions and fetch data from restricted XML endpoints.
+
+Data Handling: Uses feedparser and requests with custom headers to simulate authentic browser traffic, preventing firewall blocks or CAPTCHA triggers.
