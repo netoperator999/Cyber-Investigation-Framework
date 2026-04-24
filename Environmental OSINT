@@ -1,0 +1,19 @@
+Author: Michael Watson
+Role: Cyber-Investigation & IT Analyst | Certified Paralegal
+Environmental Watch OSINT is a localized intelligence platform designed to monitor infrastructure anomalies, environmental non-compliance, and systemic failures. By fusing public GIS data with real-time community reports, the system provides a high-resolution "Tactical Map" of a specific operating area (currently optimized for Antioch, CA).
+________________________________________
+I. Core Systems & Capabilities
+•	Sentinel Scraper: An OSINT sweep engine that intercepts data from the SeeClickFix API. It monitors compliance reports such as illegal dumping, hazardous vegetation, and systemic infrastructure issues, capturing GPS coordinates, descriptions, and current status.
+•	Tactical OSINT Map: A dynamic visualization engine built with Folium. It generates a high-contrast dark-mode interface featuring:
+o	Incident Clusters: Grouping localized anomalies for rapid analysis.
+o	Systemic Failure Heatmap: Identifying high-density zones of recurring environmental or infrastructure neglect.
+o	Categorized Intel: Color-coded markers for rapid identification of issues (e.g., Red for Dumping, Green for Vegetation).
+•	ArcGIS Intercept: A specialized module (fetch_gis.py) that pulls official parcel boundaries and zoning data directly from ArcGIS REST API services, allowing the operator to cross-reference reports with property lines.
+•	Intelligence Interrogator: A command-line utility for querying the localized intelligence database (antioch_intel.db) via keyword searches to track specific patterns or recurring actors.
+________________________________________
+II. Technical Architecture
+•	Data Tier: A SQLite "Vault" (antioch_intel.db) that serves as a persistent record of all intercepted intelligence.
+•	Backend: Python-based automation scripts for API interaction, data normalization, and spatial data extraction (GeoJSON).
+•	Frontend: A tactical GUI powered by Streamlit (Project Vanguard) and standalone HTML5/Leaflet maps for offline or browser-based operations.
+•	Data Formats: Heavy utilization of GeoJSON for infrastructure, parcels, and zoning overlays.
+
